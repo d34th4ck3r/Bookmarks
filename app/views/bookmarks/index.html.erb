@@ -1,0 +1,85 @@
+<div id="divForBookmarks" >
+</div>
+<ul id="list">
+</ul>
+
+<div id="divForSearch" style="float:right;">
+</div>
+
+<script type="text/template" id="enterBookmark"  >
+<div style="float:left;">
+<label for="bookmark" > Bookmark:</label>
+<input type="text" id="bookmark" /><br/>
+<label for="tags" > Tags:</label>
+<input type="text" id="tags" /><br/>
+<input type="button" value="Add" id="submit" /><br/>
+<div id="listOfBookmarks" >
+<%= render :partial=>"allBookmark" %>
+</div>
+</div>
+
+<div style="float:right;">
+<h3>Search:</h3>
+<input type="text" id="tosearch" />
+<input type="button" id="search" value="Search"/>
+<div id="result">
+</div>
+</div>
+
+</script>
+
+
+<script type="text/javascript">
+
+
+var BookmarksModel=Backbone.Model.extend({
+    urlRoot: "/bookmarks",
+})
+
+
+
+var enterBookmarkView = Backbone.View.extend({
+ 	el: $("#divForBookmarks"),
+	events: {
+		"click #submit" : "submitBookmark",
+		"click #search" : "Search",
+		"click #removed" : "Removed"
+	},
+    initialize: function(){    	
+        this.model.bind('change',this.render);
+        this.render();
+	},
+    render: function(){
+        var temp = _.template( $("#enterBookmark").html(), {} );
+        $(this.el).html(temp);
+        return this;
+        },
+    submitBookmark : function(){
+	      	var BM={
+	       		url: $("#bookmark").val(),
+	       		tag_list: $("#tags").val()
+	       	}
+	       	this.model.save(BM,{
+	   		success: function (model) {
+	        	$("#bookmark").val(""),
+	        	$("#tags").val("")
+	       	},
+	       	error: function (model) {
+	       		alert("Not added! Probably because it is already available.");
+	       	}
+	       });
+	       	$.get("bookmarks.js")
+    },
+    Search: function(){
+    	$.get ("bookmarks.js?searched=" + $("#tosearch").val());
+    },
+    Removed: function(){
+    	$.get("bookmarks.js")
+    }
+});
+
+var mymodel=new BookmarksModel();
+var enter_bookmark_view = new enterBookmarkView({ model: mymodel });
+</script>
+
+</script>

@@ -1,0 +1,25 @@
+
+<div id="temp">
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+
+	$(".search_box").keyup(function(){
+    $.get ("search.js?tags=" + this.value)
+    $(".spinning").show()
+ 
+})
+
+})
+
+
+</script>
+
+
+
+<%= text_field_tag 'search', nil, :class => "search_box" %>
+ <ul class="results">
+    <span class="spinning" style="display:none;"></span>
+ </ul>

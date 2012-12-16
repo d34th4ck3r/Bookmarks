@@ -1,0 +1,10 @@
+<% if @bookmarks %>
+	<% @bookmarks.each do |bookmark| %>
+		<h2><%= bookmark.url %> </h2>
+		<% bookmark.tag_list.each do |tag| %>
+	                 <li><%= tag %>  </li>
+	    <% end %>
+	    <%= button_to "Remove", bookmark, :method=>:delete , :remote=>true , :id=>"removed" %>
+		<hr/>
+	<% end %>
+<% end %>
