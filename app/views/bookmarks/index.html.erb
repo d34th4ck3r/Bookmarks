@@ -68,13 +68,13 @@ var enterBookmarkView = Backbone.View.extend({
 	       		alert("Not added! Probably because it is already available.");
 	       	}
 	       });
-	       	$.get("bookmarks.js")
+	       	$.get("/bookmarks.js")
     },
     Search: function(){
-    	$.get ("bookmarks.js?searched=" + $("#tosearch").val());
+    	$.get ("/bookmarks.js?searched=" + $("#tosearch").val());
     },
     Removed: function(){
-    	$.get("bookmarks.js")
+    	$.get("/bookmarks.js")
     }
 });
 
